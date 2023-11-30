@@ -49,10 +49,7 @@ Exercise 3 (Hard):
                 H3|H4 => H6 => H5|H6 => H7 = root
 
 */
-#![allow(dead_code)]
-#![allow(unused_variables)]
 
-use std::fmt::Display;
 use sha2::Digest;
 
 
@@ -64,7 +61,6 @@ pub struct MerkleTree {
     hash: Hash,
     left: Option<Box<MerkleTree>>,
     right: Option<Box<MerkleTree>>,
-
 }
 
 /// Which side to put Hash on when concatenating proof hashes
@@ -171,16 +167,6 @@ impl MerkleTree {
     /// Returns a list of hashes that can be used to prove that the given data is in this tree
     pub fn prove(&self, data: &Data) -> Option<Proof> {
         Some(Proof { hashes: self._prove(data)? })
-    }
-}
-
-// Just helper for debugging purposes
-impl Display for Proof<'_> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        for (direction, hash) in &self.hashes {
-            write!(f, " -> [{:?}, {}]", direction, hex::encode(hash))?;
-        }
-        write!(f, ";")
     }
 }
 
